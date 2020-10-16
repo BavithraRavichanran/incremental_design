@@ -16,12 +16,11 @@ function getrandomScore(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-//Solution 2 : Using Prototype Object
-
-function Match(target){
+class Match {
+ constructor(target){
     this.target = target;
 }
-Match.prototype.singleOverScore = function(){
+singleOverScore(){
     let score = 0;
     for (let i = 0; i < 6; i++) {
         let eachBallScore = getrandomScore(0, 7);
@@ -32,6 +31,7 @@ Match.prototype.singleOverScore = function(){
         }
     }
         return score;
+}
 }
 
 function chaseTarget(target) {
