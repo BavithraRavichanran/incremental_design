@@ -16,24 +16,31 @@ function getrandomScore(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function singleOver(target){
+//Solution 2 : Using Prototype Object
+
+function Match(target){
+    this.target = target;
+}
+Match.prototype.singleOverScore = function(){
     let score = 0;
     for (let i = 0; i < 6; i++) {
         let eachBallScore = getrandomScore(0, 7);
         console.log(eachBallScore)
         score += eachBallScore;
-        if (score >= target) {
+        if (score >= this.target) {
             return score;
         }
     }
         return score;
 }
+
 function chaseTarget(target) {
-    let scoreForover = singleOver(target);
-    if (scoreForover >= target) {
-        console.log("Batsman won");
-    } else {
-        console.log("Batsman loss");
-    }
+        let match = new Match(target);
+        let scoreForover=  match.singleOverScore();
+        if (scoreForover >= target) {
+            console.log("Batsman won");
+        } else {
+            console.log("Batsman loss");
+        }  
 
 }
