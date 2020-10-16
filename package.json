@@ -1,7 +1,6 @@
 {
   "name": "incremental_design",
   "version": "1.0.0",
-
   "description": "Learning Incremental Design",
   "main": "chaseTarget.js",
   "scripts": {
@@ -17,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/BavithraRavichanran/incremental_design/issues"
   },
-
   "homepage": "https://github.com/BavithraRavichanran/incremental_design#readme"
-  
 }
-
