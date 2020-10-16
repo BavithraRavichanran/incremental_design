@@ -15,52 +15,47 @@ rl.on('line', (line) => {
     play(target, overs, batmansType);
 });
 
-// function getrandomScore(min, max) {
-//     return Math.floor(Math.random() * (max - min)) + min;
-// }
-
 class Match {
-    constructor(target, overs) {
+    constructor(target, overs, player) {
         this.target = target;
         this.overs = overs;
+        this.player = player;
     }
 
     balls = (overs) => {
         return this.overs * 6;
     }
-    // getScore(overs) {
-    //     let score = 0;
-    //     let totalBalls = this.balls(overs);
-    //     for (let i = 0; i < totalBalls; i++) {
-    //         let batsmanScore = getrandomScore(0, 7);
-    //         let bowlerScore = getrandomScore(0, 7);
-    //         console.log("Batsman Score:", batsmanScore)
-    //         console.log("Bowler Score:", bowlerScore)
-    //         if (batsmanScore === bowlerScore) {
-    //             return false;
-    //         }
-    //         score += batsmanScore;
-    //         if (score >= this.target) {
-    //             return score;
-    //         }
-    //     }
-    //     return score;
-    // }
-
-
 }
 
 class Player {
-    constructor() {
+    constructor(type) {
+        this.type = type;
         this.run = 0;
         this.max = 7;
         this.min = 0;
     }
-    getRunPerBall() {
+    getRun() {
+        if (this.type === 0) {
+            return this.getRunPerBall();
+        } else if (this.type === 1) {
+            return this.getHitRun();
+        }else if (this.type === 2) {
+            return this.getDefensiveRun();
+        } else {
+            console.log("wrong");
+            return;
+        }
+    }
+
+    getRunPerBall = () => {
         return Math.floor(Math.random() * (this.max - this.min)) + this.min;
     }
     getHitRun() {
         let numbers = [0, 4, 6];
+        return numbers[Math.floor(Math.random() * numbers.length)];
+    }
+    getDefensiveRun(){
+        let numbers = [0, 1,2,3];
         return numbers[Math.floor(Math.random() * numbers.length)];
     }
 }
@@ -70,23 +65,18 @@ function getScore(balls, batmansType) {
     let batsmanScore;
     for (let i = 0; i < balls; i++) {
         let score = 0
-        bowlersScore = new Player().getRunPerBall();
-        console.log(bowlersScore);
-        if (batmansType === 0) {
-            batsmanScore = new Player().getRunPerBall();
-            console.log(batsmanScore)
-        } else if (batmansType == 1) {
-            batsmanScore = new Player().getHitRun();
-            console.log(batsmanScore);
-        } else {
-            console.log("Worng");
-            return;
-        }
+        bowlersScore = new Player(0).getRun();
+        console.log("Bowler",bowlersScore);
+        batsmanScore = new Player(batmansType).getRun();
+        console.log("Batsman",batsmanScore)
         if (batsmanScore === bowlersScore) {
-            return 0;
+            return -1;
+        }
+        if (score >= this.target) {
+            return score;
         }
         score += batsmanScore;
-        
+
     }
     return score;
 
@@ -102,6 +92,6 @@ function play(target, overs, batmansType) {
         console.log("Batsman loss");
     }
 }
-        
+
 
 
