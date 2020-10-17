@@ -1,5 +1,6 @@
 var readline = require('readline');
 const Match = require('./match');
+const DecisionPending = require('./decisionpending');
 const { Batsman, Bowler } = require('./player');
 
 
@@ -24,7 +25,6 @@ function getOverallScore(balls, batmansType, bowlerType) {
     let bowlersRun;
     let batsmanRun;
     let wicketBowler = false;
-    let tailEnderBatsman = false;
     let score = 0;
     for (let i = 0; i < balls; i++) {
         bowlersRun = new Bowler(bowlerType).getRun();
@@ -33,22 +33,16 @@ function getOverallScore(balls, batmansType, bowlerType) {
         wicketBowler = new Bowler(bowlerType).getwicket();
         console.log("Bowler", bowlersRun);
 
-        tailEnderBatsman = new Batsman(batmansType).isTailEndBatsman();
-        batsmanRun = new Batsman(batmansType).getRun();
-
+        batsman = new Batsman(batmansType);
+        batsmanRun  = batsman.getRun();
         console.log("Batsman", batsmanRun)
-        
+       
+
         // Normal Bowler
         if (wicketBowler) {
-            if (batsmanRun === bowlersRun) { // Others BAtsman (include tail)
+            isbatsmanOut = new DecisionPending(bowlersRun, batsmanRun, batmansType).isOut();
+            if(isbatsmanOut){
                 return score;
-            } 
-            if(tailEnderBatsman){  // TailEndBatsman 
-                let oddBowlerRun = (bowlersRun % 2 !== 0 )? 'true': 'false';
-                let oddBatsmanRun = (batsmanRun % 2 !== 0 )? 'true': 'false';
-                if((oddBatsmanRun && oddBowlerRun ) || (!oddBowlerRun && !oddBatsmanRun)){
-                    return score; 
-                }
             }
         } else {  // partTime
             continue;

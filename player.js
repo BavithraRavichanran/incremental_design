@@ -7,30 +7,22 @@ class Batsman {
     }
     getRun() {
         if (this.type === 0) {
-            return new NormalBatsman().getRun();
+            this.run=  new NormalBatsman().getRun();
+            return this.run;
         } else if (this.type === 1) {
-            return new HitBatsman().getRun();
-        } else if (this.type === 2) {
-            return new DefensiverBatsman().getRun();
+            this.run=  new HitBatsman().getRun();
+            return this.run;
+        } else if (this.type === 2) { 
+            this.run= new DefensiverBatsman().getRun();
+            return this.run;
         } else if(this.type === 3){
-            return new TailEnderBatsman().getRun();
+            this.run= new TailEnderBatsman().getRun();
+            return this.run;
         }
         else {
             console.log("wrong");
             return;
         }
-    }
-    // isOut() {
-    //     if(this.type === 3){
-    //         return new TailEnderBatsman().isOut();
-    //     }
-    //     else {
-    //         return new NormalBatsman().isOut();
-
-    //     }
-    // }
-    isTailEndBatsman(){
-        return (this.type === 3)? 'true' : 'false';
     }
 
 }
@@ -61,9 +53,7 @@ class TailEnderBatsman extends Batsman {
         let max = 7;
         return Math.floor(Math.random() * (max - min)) + min;
     }
-    isOut(){
 
-    }
 }
 
 // Bowler
